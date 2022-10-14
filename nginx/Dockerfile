@@ -6,4 +6,3 @@ FROM nginx:1.15.0
 RUN rm /etc/nginx/conf.d/default.conf
 #Agora vamos passar nosso arquivo para essa pasta:
 COPY nginx.conf /etc/nginx/conf.d
-
