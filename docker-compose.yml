@@ -1,0 +1,44 @@
+version: "3" #Tentar atualizar o docker-compose no pc
+
+services: 
+  postgres_drivenops_db:
+    image: postgres:13
+    container_name: postgres_drivenops_db
+    restart: always
+    ports: 
+      - 4457:5432
+    env_file:
+      - ./back-end/.env
+    volumes:
+      - pg_drivenops_db:/var/lib/postgresql/data
+  node_drivenops_app:
+    container_name: node_drivenops_app
+    build: ./back-end
+    image: node_drivenops_app_image
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres_drivenops_db
+    env_file:
+      - ./back-end/.env
+  react_drivenops_app:
+    container_name: react_drivenops_app
+    build: ./front-end
+    image: react_drivenops_app_image
+    volumes:
+      - build_react:/var/www/html
+  nginx_drivenops_app:
+    container_name: nginx_drivenops_app
+    build: ./nginx
+    image: nginx_drivenops_app_image
+    ports:
+      - 100:80
+    volumes:
+      - build_react:/var/www/html 
+    depends_on:
+      - postgres_drivenops_db
+      - node_drivenops_app
+      - react_drivenops_app
+volumes:
+  pg_drivenops_db:
+  build_react:
