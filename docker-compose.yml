@@ -32,7 +32,7 @@ services:
     build: ./nginx
     image: nginx_drivenops_app_image
     ports:
-      - 100:80
+      - 80:80
     volumes:
       - build_react:/var/www/html 
     depends_on:
