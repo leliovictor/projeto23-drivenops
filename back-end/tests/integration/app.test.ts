@@ -10,8 +10,6 @@ describe('integration test', () => {
   });
 
   it('should save a student', async () => {
-    console.log("I'm here");
-
     const students = { students: [{ name: 'juvelina' }] };
     const { status } = await agent.post('/students').send(students);
     expect(status).toBe(201);
